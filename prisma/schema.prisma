@@ -1,0 +1,60 @@
+datasource db {
+  provider = "sqlite" // Keyinchalik "postgresql" qilib o'zgartirasiz
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  phone      String    @unique
+  fullName   String
+  avatar     String?
+  password   String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  lastSeen   DateTime? // Oxirgi marta online bo'lgan vaqt
+
+
+  messagesSent Message[] @relation("messagesSent")
+  chats        ChatUser[]
+}
+
+
+model Chat {
+  id         Int        @id @default(autoincrement())
+  isGroup    Boolean    @default(false)
+  title      String?    // Guruh nomi yoki private bo'lsa null
+  avatar     String?    // Guruh rasmi yoki private bo'lsa null
+  createdAt  DateTime   @default(now())
+
+  messages     Message[]
+  participants ChatUser[]
+}
+
+model ChatUser {
+  id          Int       @id @default(autoincrement())
+  chatId      Int
+  userId      Int
+  unreadCount Int       @default(0) // o'qilmagan xabarlar soni
+  lastReadAt  DateTime? // oxirgi o'qigan vaqti
+
+  chat Chat @relation(fields: [chatId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([chatId, userId])
+}
+
+model Message {
+  id         Int      @id @default(autoincrement())
+  chatId     Int
+  senderId   Int
+  content    String   // Matn yoki fayl URL
+  createdAt  DateTime @default(now())
+  readBy     Json     @default("[]") // JSON array sifatida saqlanadi
+
+  chat   Chat @relation(fields: [chatId], references: [id])
+  sender User @relation("messagesSent", fields: [senderId], references: [id])
+}
