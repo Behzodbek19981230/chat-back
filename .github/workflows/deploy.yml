@@ -19,11 +19,10 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Deploy to VPS
-        run: |
-          ssh -o StrictHostKeyChecking=no deploy@45.138.159.166 "
+        run:
             cd /var/www/chat-back &&
             git pull &&
             npm install &&
             npx prisma migrate deploy &&
             pm2 restart chat-back
-          "
+
