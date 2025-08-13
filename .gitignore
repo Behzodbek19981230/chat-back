@@ -3,8 +3,8 @@ node_modules
 #.env
   src/generated/prisma
 
-#prisma/migrations
-#prisma/dev.db
+prisma/migrations
+prisma/dev.db
 # Ignore Prisma client output
 
 
