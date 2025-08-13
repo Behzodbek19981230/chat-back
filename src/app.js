@@ -4,6 +4,7 @@ import authRoutes from "./routes/auth.routes.js";
 import {authMiddleware} from "./middleware/authMiddleware.js";
 import cors from "cors";
 import messageRoutes from "./routes/message.routes.js";
+
 const app = express();
 // CORS sozlash
 app.use(
@@ -13,6 +14,8 @@ app.use(
     })
 );
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
+
 
 // Routes
 app.use("/api/auth", authRoutes);   // Auth API
