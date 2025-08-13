@@ -24,6 +24,6 @@ jobs:
             npm install
             npx prisma migrate dev --name "github-action-deploy" || npx prisma migrate deploy
             pm2 delete chat-back || echo "Old process not found"
-            pm2 start npm --name "chat-back" -- start
+            pm2 start npm --name "chat-back" -- start -- --port 3002
             pm2 save
 

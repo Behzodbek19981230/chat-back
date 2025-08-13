@@ -8,6 +8,7 @@ const prisma = new PrismaClient();
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
+console.log(`Server port: ${PORT}`);
 
 // Express appdan HTTP server yaratamiz
 const server = http.createServer(app);
