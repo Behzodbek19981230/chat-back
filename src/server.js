@@ -80,4 +80,11 @@ io.on("connection", (socket) => {
 
 server.listen(PORT, () => {
     console.log(`✅ Server running on http://localhost:${PORT}`);
+}).on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+        console.error(`❌ Port ${PORT} allaqachon band`);
+    } else {
+        console.error(err);
+    }
 });
+
