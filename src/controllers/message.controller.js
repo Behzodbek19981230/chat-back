@@ -32,7 +32,7 @@ export const sendMessage = async (req, res) => {
             contentValue = `/uploads/media/${req.file.filename}`;
         } else {
             // Matn bo‘lsa
-            contentValue = text;
+            contentValue = content;
         }
         const message = await messageService.sendMessage(chatId, req.user.userId, contentValue);
         res.json(message);
