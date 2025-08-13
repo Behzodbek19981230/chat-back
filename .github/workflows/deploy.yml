@@ -22,5 +22,7 @@ jobs:
             cd /var/www/chat-back
             git pull origin main
             npm install
-            npx prisma migrate dev --name "github-action-deploy" || npx prisma migrate deploy 
-            pm2 restart chat-back || pm2 start npm --name "chat-back" -- start
+            npx prisma migrate dev --name "github-action-deploy" || npx prisma migrate deploy
+            pm2 delete chat-back || true
+            pm2 start npm --name "chat-back" -- start || true
+            pm2 save
